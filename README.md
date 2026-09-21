@@ -3,6 +3,13 @@
 <p align="center">A low-level control centre for MacBooks that lives in the menu bar.<br>
 Battery, CPU, memory, disk, network, temperatures — and the fans, when you want them louder.</p>
 
+<p align="center">
+<a href="https://github.com/vladislavkovalskyi/juicymac/releases/latest"><img src="https://img.shields.io/github/v/release/vladislavkovalskyi/juicymac?color=FF8A1F&label=download" alt="Latest release"></a>
+<img src="https://img.shields.io/badge/macOS-26%2B-7A2BFF" alt="macOS 26+">
+<img src="https://img.shields.io/badge/Swift-6-FF3D7F" alt="Swift 6">
+<a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-23C55E" alt="MIT licence"></a>
+</p>
+
 <p align="center"><img src="docs/images/icons.png" width="720" alt="The 3D icon set: juice glass, chip, memory stick, disk, fan, thermometer, battery, bolt, orange slice"></p>
 
 <p align="center"><img src="docs/images/overview.png" width="900" alt="Overview screen"></p>
@@ -67,18 +74,33 @@ Safety rails:
 Fan control on Apple silicon relies on undocumented SMC keys. Without the helper everything
 else still works, read-only.
 
+## Install
+
+Download the DMG from [Releases](https://github.com/vladislavkovalskyi/juicymac/releases/latest),
+open it and drag **Juicy Mac** to Applications.
+
+The app is signed with a development certificate, not a paid Developer ID, so Gatekeeper stops the
+first launch. Right-click the app → **Open** → **Open**, or clear the quarantine flag once:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/Juicy Mac.app"
+```
+
+Fan control asks to install its helper the first time you use it; everything else works without it.
+
 ## Build
 
 Requires macOS 26+, Xcode 26+ and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```bash
 brew install xcodegen
-cd JuicyKit && swift test          # 35 tests: pure logic plus live samplers
-cd .. && xcodegen generate
-xcodebuild -project JuicyMac.xcodeproj -scheme JuicyMac -sdk macosx -configuration Debug build
+scripts/test.sh              # 35 tests: pure logic plus live samplers
+scripts/build.sh             # Debug build (Release for a signed build)
+scripts/make-dmg.sh 1.0.0    # Release build packed into dist/JuicyMac-1.0.0.dmg
 ```
 
-Re-run `xcodegen generate` after adding files — the project is generated from `project.yml`.
+The Xcode project is generated from `project.yml`, so re-run `xcodegen generate` (or `scripts/build.sh`)
+after adding or removing files.
 
 ## Layout
 
@@ -92,6 +114,7 @@ JuicyKit/     Swift package
   JuicyHelperKit XPC protocol and the fan writer
 design/icons/ Blender scripts that render the 3D icon set
 docs/dev/     Concept and implementation notes
+scripts/      build, test and DMG packaging
 ```
 
 Icons are modelled and rendered from scratch in Blender (`design/icons/render_icons.py`);
