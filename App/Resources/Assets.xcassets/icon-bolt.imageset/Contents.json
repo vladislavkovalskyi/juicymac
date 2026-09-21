@@ -1,0 +1,18 @@
+{
+  "images": [
+    {
+      "filename": "icon-bolt.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "icon-bolt@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
