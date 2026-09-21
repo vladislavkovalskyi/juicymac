@@ -1,0 +1,14 @@
+# Xcode project is generated from project.yml by XcodeGen
+JuicyMac.xcodeproj/
+build/
+DerivedData/
+.build/
+.swiftpm/
+*.xcuserdatad
+*.xcworkspace/xcuserdata/
+
+# Blender renders are reproducible: blender -b -P design/icons/render_icons.py -- design/icons/out
+design/icons/out/*.png
+!design/icons/out/juice.png
+
+.DS_Store
