@@ -26,13 +26,13 @@ struct OverviewView: View {
                     .bodyStyle()
                     .frame(maxWidth: 440, alignment: .leading)
                     .fixedSize(horizontal: false, vertical: true)
-                Spacer(minLength: 0)
                 squeezeControls
+                    .padding(.top, 6)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             scoreDial
         }
-        .frame(height: 290)
+        .frame(height: 250)
     }
 
     private var summary: String {
@@ -66,12 +66,16 @@ struct OverviewView: View {
 
     private var squeezeControls: some View {
         HStack(spacing: 14) {
-            Button(model.isSqueezing ? "Squeezing…" : "Squeeze test") { model.startSqueeze() }
-                .buttonStyle(.glassProminent)
-                .tint(.white)
-                .foregroundStyle(.black)
-                .controlSize(.large)
-                .disabled(model.isSqueezing)
+            Button { model.startSqueeze() } label: {
+                Text(model.isSqueezing ? "Squeezing…" : "Squeeze test")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(.black)
+                    .padding(.horizontal, 22)
+                    .frame(height: 42)
+                    .background(.white.opacity(model.isSqueezing ? 0.55 : 1), in: .capsule)
+            }
+            .buttonStyle(.plain)
+            .disabled(model.isSqueezing)
 
             if model.isSqueezing {
                 ProgressView(value: model.squeezeProgress).frame(width: 150).tint(.white)
@@ -101,9 +105,11 @@ struct OverviewView: View {
             // The quit button only shows when the heads-up is actually about a process.
             if let top = model.topProcess, text.hasPrefix(top.name) {
                 Button("Quit \(top.name)") { model.quit(pid: top.pid) }
-                    .buttonStyle(.glassProminent)
-                    .tint(.white)
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 14).frame(height: 30)
+                    .background(.white, in: .capsule)
                     .foregroundStyle(.black)
+                    .font(.system(size: 13, weight: .semibold))
             }
         }
         .padding(.horizontal, Space.card)

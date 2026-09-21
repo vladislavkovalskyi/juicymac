@@ -91,9 +91,11 @@ struct FansView: View {
                 Button(model.fans.status == .needsApproval ? "Open Login Items" : "Install helper") {
                     model.fans.install()
                 }
-                .buttonStyle(.glassProminent)
-                .tint(.white)
+                .buttonStyle(.plain)
+                .padding(.horizontal, 14).frame(height: 30)
+                .background(.white, in: .capsule)
                 .foregroundStyle(.black)
+                .font(.system(size: 13, weight: .semibold))
             }
         }
     }
