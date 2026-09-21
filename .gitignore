@@ -12,3 +12,6 @@ design/icons/out/*.png
 !design/icons/out/juice.png
 
 .DS_Store
+
+# Release artefacts
+dist/
